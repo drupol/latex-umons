@@ -9,6 +9,13 @@
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     with flake-utils.lib; eachSystem allSystems (system:
       let
+        pkgs = import nixpkgs {
+          inherit system;
+          config = {
+            allowUnfreePredicate = (pkg: true);
+          };
+        };
+
         umons-latex = pkgs.stdenv.mkDerivation {
             name = "umons-latex";
             pname = "umons-latex";
