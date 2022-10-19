@@ -1,33 +1,69 @@
-LaTeX Classes
-=============
+# UMons LaTeX
 
-This repository contains various LaTeX classes that are primarily
-intended to be used by professors and students of the university of
+This repository contains a beamer theme and various LaTeX classes that are
+primarily intended to be used by professors and students of the university of
 Mons but may also be of interest to a larger audience.
+
+It also contains a flake file for facilitating the integration into your own
+document using Nix.
+
+Original work Christophe Troestler at https://github.com/Chris00/latex-umons
+
+## LaTeX Classes
 
 - `tests.cls` aims to provide a simple way of composing tests.  One or
   more tests may be in the same file (in case, say, they share
-  questions).  To understand how to use this class, take a look to the
-  two examples:
-  - [tests-exemple.tex][]
-  - [tests-exemple2.tex][]
-
-  You can also automatically generate different tests for different
-  students by naming your questions and using a CSV file to assign
-  them to students, see [tests-exemple2.tex][].  To have a separate
-  PDF file for each student and to send them by email, you can use the
-  script [tests.py](tests.py).
+  questions).
 - `memoire-umons.cls` is a simple class to write a master's thesis.
-  It's use is exemplified by the files in
-  [memoire-template](memoire-template/).
 - `exprog.cls` is an class to write homework.
 - `letter-umons.cls` is a class to write letters according to the
   UMONS layout.
-- `testsslides.cls` enables to easily build slides from questions
-  written using `tests.cls`.  It is no longer developed.
+
+## Installation
+
+There are multiple ways to install this project. One of the practical
+ways to install it is to install once and use it in any of your document without
+duplicating files.
+
+First, you must clone this repository in a place of yours and then do:
+
+```shell
+make install
+```
+
+To verify that it has been correctly installed, run:
+
+```shell
+kpsewhich beamerthemeUMONS.sty
+```
+
+The return of that command should be a full path to the file, meaning that the
+theme has been correctly installed.
+
+### Installation with Nix
+
+When using Nix flake to build LaTeX document, you can use this repository as a
+flake input and build a customized version of Texlive including this theme.
+
+```nix
+    tex = pkgs.texlive.combine {
+        inherit (pkgs.texlive) scheme-full latex-bin latexmk;
+        umons = {
+            pkgs = [ umons.packages."${system}".default ];
+        };
+    };
+```
+
+`umons` must be an input of your flake:
+
+```nix
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+    umons.url = "git+https://github.com/drupol/latex-umons/";
+  };
+```
 
 
 [tests-exemple.tex]: tests-exemple.tex
 [tests-exemple2.tex]: tests-exemple2.tex
-
-![UMONS](https://math.umons.ac.be/fr/images/UMONS.jpg)

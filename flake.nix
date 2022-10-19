@@ -26,8 +26,8 @@
             installPhase = ''
                 runHook preInstall
 
-                mkdir -p $out/tex/latex
-                cp -ar $src $out/tex/latex/umons-latex
+                mkdir -p $out/tex/latex/umons
+                cp -ar $src/src/* $out/tex/latex/umons
 
                 runHook postInstall
             '';

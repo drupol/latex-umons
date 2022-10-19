@@ -1,0 +1,78 @@
+\documentclass[compress]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+
+\usetheme[navigation]{UMONS}
+%\usetheme[navigation, no-subsection, no-totalframenumber]{UMONS}
+
+\newcommand{\IR}{\mathbb{R}}
+
+
+\title{Exemple de transparents UMONS}
+\subtitle{(pour beamer)}
+\author[C. Troestler]{Christophe Troestler}
+\institute[(Math)]{%
+  Département de Mathématique\\
+  Université de Mons
+  \\[2ex]
+  \includegraphics[height=4ex]{UMONS}\hspace{2em}%
+  \raisebox{-1ex}{\includegraphics[height=6ex]{UMONS_FS}}
+}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \tableofcontents
+\end{frame}
+
+\section{Première section}
+\subsection{Première sous-section}
+\begin{frame}
+  \frametitle{Premier transparent}
+
+  \begin{itemize}
+  \item Niveau 1 d'\texttt{itemize}
+    \begin{itemize}
+    \item Niveau 2 d'\texttt{itemize}
+    \item Niveau 2 d'\texttt{itemize}
+    \end{itemize}
+  \item Niveau 1 d'\texttt{itemize}
+  \end{itemize}
+\end{frame}
+
+\subsection{Deuxième sous-section}
+\begin{frame}
+  \frametitle{Second transparent}
+
+  \begin{theorem}
+    Soit $f : \IR \to \IR$ une fonction continue et coercive.  Alors
+    $f$ possède un minimum.
+  \end{theorem}
+\end{frame}
+
+
+\section{Deuxième section}
+\begin{frame}
+  \frametitle{Second transparent}
+
+  \begin{enumerate}
+  \item Niveau 1 d'\texttt{enumerate}
+    \begin{enumerate}
+    \item Niveau 2 d'\texttt{enumerate}
+    \item Niveau 2 d'\texttt{enumerate}
+    \end{enumerate}
+  \item Niveau 1 d'\texttt{enumerate}
+  \end{enumerate}
+\end{frame}
+
+
+\end{document}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
