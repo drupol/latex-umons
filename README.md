@@ -60,7 +60,7 @@ flake input and build a customized version of Texlive including this theme.
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    umons.url = "git+https://github.com/drupol/latex-umons/";
+    umons.url = "github:drupol/latex-umons";
   };
 ```
 
