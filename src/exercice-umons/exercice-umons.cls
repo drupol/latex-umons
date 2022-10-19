@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}[1998/12/01]
-\ProvidesClass{memoire-umons}[2009/05/05 v0.1 ^^J
+\ProvidesClass{exercice-umons}[2009/05/05 v0.1 ^^J
   \space
-  Memoires de l'Université de Mons.]
+  Exercices de l'Université de Mons.]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
@@ -31,8 +31,8 @@
 \RequirePackage{amsthm,aliascnt}
 \RequirePackage{amssymb}
 \RequirePackage{translator}
-
 \RequirePackage{graphics}
+
 % For the logos (use `xcolor' to avoid warnings if `xcolor' is used in
 % the document, e.g. with Tikz).  `xcolor' is not present in all distrib.
 %\PassOptionsToPackage{rgb}{xcolor}
@@ -65,7 +65,6 @@
   \newcommand*{\umons@AfterBeginDocument}[1]{%
     \AddToHook{begindocument/end}{#1}}
 }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
@@ -118,71 +117,11 @@
 
 \AtBeginDocument{\providecommand{\texorpdfstring}[2]{#1}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%%                     T R A N S L A T I O N S
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\providetranslation[to=english]{Supervisor}{Supervisor}
-\providetranslation[to=english]{Supervisors}{Supervisors}
-\providetranslation[to=english]{Co-supervisors}{Co-supervisors}
-\providetranslation[to=english]{umons@team}{Team}
-\providetranslation[to=english]{umons@teams}{Teams}
-\providetranslation[to=english]{umons@mathematics}{Mathematics}
-\providetranslation[to=english]{Department of Mathematics}{%
-  Department of Mathematics}
-\providetranslation[to=english]{Faculty of Sciences}{Faculty of Sciences}
-\providetranslation[to=english]{University of Mons}{University of Mons}
-\providetranslation[to=english]{Master's Thesis submitted by}{%
-  Master's Thesis submitted by}
-\providetranslation[to=english]{umons@obtain@master}{%
-  With a view of getting the degree of Master in}
-\providetranslation[to=english]{Academic Year}{Academic Year}
-\providetranslation[to=english]{umons@Equation}{Equation}
-\providetranslation[to=english]{umons@Theorem}{Theorem}
-\providetranslation[to=english]{umons@Proposition}{Proposition}
-\providetranslation[to=english]{umons@Lemma}{Lemma}
-\providetranslation[to=english]{umons@Corollary}{Corollary}
-\providetranslation[to=english]{umons@Definition}{Definition}
-\providetranslation[to=english]{umons@Remark}{Remark}
-
-\providetranslation[to=french]{Supervisor}{Directeur}
-\providetranslation[to=french]{Supervisors}{Directeurs}
-\providetranslation[to=french]{Co-supervisors}{Co-directeurs}
-\providetranslation[to=french]{umons@team}{Service}
-\providetranslation[to=french]{umons@teams}{Services}
-\providetranslation[to=french]{umons@mathematics}{sciences math\'ematiques}
-\providetranslation[to=french]{Department of Mathematics}{%
-  D\'epartement de Math\'ematique}
-\providetranslation[to=french]{Faculty of Sciences}{Facult\'e des Sciences}
-\providetranslation[to=french]{University of Mons}{Universit\'e de Mons}
-\providetranslation[to=french]{Master's Thesis submitted by}{%
-  M\'emoire r\'ealis\'e par}
-\providetranslation[to=french]{umons@obtain@master}{%
-  pour l'obtention du dipl\^ome de Master en}
-\providetranslation[to=french]{Academic Year}{Ann\'ee acad\'emique}
-\providetranslation[to=french]{umons@Equation}{\'equation}
-\providetranslation[to=french]{Theorem}{Th\'eor\`eme}
-\providetranslation[to=french]{Lemma}{Lemme}
-\providetranslation[to=french]{Corollary}{Corollaire}
-\providetranslation[to=french]{Definition}{D\'efinition}
-\providetranslation[to=french]{Remark}{Remarque}
-\providetranslation[to=french]{umons@Theorem}{th\'eor\`eme}
-\providetranslation[to=french]{umons@Proposition}{proposition}
-\providetranslation[to=french]{umons@Lemma}{lemme}
-\providetranslation[to=french]{umons@Corollary}{corollaire}
-\providetranslation[to=french]{umons@Definition}{d\'efinition}
-\providetranslation[to=french]{umons@Remark}{remarque}
-
 \AtBeginDocument{%
-  \translatelet{\@discipline}{umons@mathematics}
-  \translatelet{\@department}{Department of Mathematics}
+  \translatelet{\@discipline}{Informatics}
+  \translatelet{\@departement}{Department of}
   \translatelet{\memoire@faculte}{Faculty of Sciences}
   \translatelet{\memoire@universite}{University of Mons}
-  \def\memoire@realise{%
-    \translate{Master's Thesis submitted by} \@author\\
-    \translate{umons@obtain@master} \@discipline}
 }
 
 \begingroup
@@ -197,26 +136,18 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\@directeur{}
-\newcommand{\directeur}[1]{%
-  \def\@directeur{#1}%
-  \translatelet{\@directeur@name}{Supervisor}}
-\newcommand{\directeurs}[1]{%
-  \def\@directeur{#1}%
-  \translatelet{\@directeur@name}{Supervisors}}
-\newcommand{\codirecteurs}[1]{%
-  \def\@directeur{#1}%
-  \translatelet{\@directeur@name}{Co-supervisors}}
 \def\umons@service{}
 \newcommand{\service}[1]{%
   \def\umons@service{#1}%
-  \translatelet{\@service@name}{umons@team}}
+  \translatelet{\@service@name}{Service}}
 \newcommand{\services}[1]{%
   \def\umons@service{#1}%
-  \translatelet{\@service@name}{umons@teams}}
+  \translatelet{\@service@name}{Services}}
+\newcommand{\departement}[1]{%
+  \def\umons@departement{#1}%
+  \translatelet{\@departement@name}{Department of}}
 
 \newcommand{\discipline}[1]{\def\@discipline{#1}}
-\newcommand{\departement}[1]{\def\@department{#1}}
 \def\@date{}
 
 \def\umons@logofac{UMONS_FS}
@@ -224,7 +155,7 @@
 
 \newcommand{\umons@notempty}[3]{{%
     \def\\{}% (locally)
-    \ifx #1\empty \PackageError{memoire-umons}{%
+    \ifx #1\empty \PackageError{exercice-umons}{%
       Pas de #2.^^J\space\space Utilisez la commande `\protect
       #3{...}'  pour specifier sa valeur}{}%
     \fi }}
@@ -236,9 +167,8 @@
 \renewcommand{\maketitle}{%
   \renewcommand{\thepage}{\Roman{page}}% => no clash for PDF links
   % Checks:
-  \umons@notempty{\@directeur}{directeur}{\directeur}%
-  \umons@notempty{\umons@service}{service}{\service}%
   \umons@notempty{\@date}{d'annee academique}{\date}%
+  \umons@notempty{\@departement}{departement}{\departement}%
   \begin{titlepage}
     % Le logo DOIT être en haut à droite du document
     \addtolength{\hoffset}{5mm}% recenter slightly (local to this page)
@@ -256,7 +186,7 @@
             \ifx \umons@logofac\empty \else
               \resizebox{!}{15mm}{\includegraphics{\umons@logofac}}\\[3pt]%
             \fi
-            \@department
+            \@departement@name\ \umons@departement
           \end{tabular}%
           %\fi
           \hfill
@@ -279,15 +209,18 @@
         \@title
         \\[1.5ex]}%
       \fontsize{12}{14}\fontfamily{ptm}\selectfont %
-      \memoire@realise
 
       \vfill
       \begin{tabular}[t]{@{}r@{ }l@{}}
+        \ifx \umons@service\empty \else
         \textbf{\@service@name\umons@activecolon}&
         \begin{tabular}[t]{@{}l@{}} \umons@service \end{tabular}%
+        \fi
         \\[2\jot]
-        \textbf{\@directeur@name\umons@activecolon}&
-        \begin{tabular}[t]{@{}l@{}} \@directeur \end{tabular}%
+        \ifx \@author\empty \else
+        \textbf{Author\umons@activecolon}&
+        \begin{tabular}[t]{@{}l@{}} \@author \end{tabular}%
+        \fi
       \end{tabular}
       \\
       \vfill\vfill\vfill
@@ -310,7 +243,6 @@
   \setcounter{page}{1}%
   \renewcommand{\thepage}{\arabic{page}}%
 }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
@@ -346,7 +278,7 @@
 \newenvironment{preface}{%
   % Pages for the document:
   \ifnum \value{page} > 1
-  \PackageError{memoire-umons}{%
+  \PackageError{exercice-umons}{%
     L'environnement `preface' doit commencer en page 1.}{}%
   \fi
   \renewcommand{\thepage}{\roman{page}}%
@@ -356,7 +288,6 @@
   \setcounter{page}{1}%
   \renewcommand{\thepage}{\arabic{page}}%
 }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
@@ -421,7 +352,6 @@
     3.25ex \@plus 1ex \@minus .2ex}{-1em}{%
     \normalfont \normalsize \sffamily\bfseries }}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %%                           Theorems,...
@@ -468,118 +398,3 @@
   \def\equationautorefname~#1\null{%
     \equationname~(#1)\null}
 }
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%%                      M A T H   M A C R O S
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% .......... Sets ..................................................
-%
-% mathbb symbols even outside math to allow alternatives for PDF
-% titles.  Do not expand \umons@mathbb in the .toc so the \ifmmode is
-% acted upon at the right place.
-\newcommand{\mathbb@pdf}[1]{%
-  \texorpdfstring{\protect\umons@mathbb{#1}}{#1}}
-\newcommand{\umons@mathbb}[1]{%
-  {\ifmmode \mathbb{#1}\else $\mathbb{#1}$\fi}}
-
-\newcommand{\IN}{{\mathbb@pdf{N}}}
-\newcommand{\IZ}{{\mathbb@pdf{Z}}}
-\newcommand{\IQ}{{\mathbb@pdf{Q}}}
-\newcommand{\IR}{{\mathbb@pdf{R}}}
-\newcommand{\IC}{{\mathbb@pdf{C}}}
-\newcommand{\IP}{{\mathbb@pdf{P}}}% proba
-
-\newcommand{\C}{\texorpdfstring{\mathcal C}{C}}
-
-\let\emptyset=\varnothing
-
-% .......... Intervals, norms ..................................................
-%
-\newcommand{\intervalcc}[1]{\mathopen[#1\mathclose]}
-\newcommand{\intervalco}[1]{\mathopen[#1\mathclose[}
-\newcommand{\intervaloc}[1]{\mathopen]#1\mathclose]}
-\newcommand{\intervaloo}[1]{\mathopen]#1\mathclose[}
-\newcommand{\bigintervalcc}[1]{\bigl[#1\bigr]}
-\newcommand{\bigintervalco}[1]{\bigl[#1\bigr[}
-\newcommand{\bigintervaloc}[1]{\bigl]#1\bigr]}
-\newcommand{\bigintervaloo}[1]{\bigl]#1\bigr[}
-\newcommand{\Bigintervalcc}[1]{\Bigl[#1\bigr]}
-\newcommand{\Bigintervalco}[1]{\Bigl[#1\Bigr[}
-\newcommand{\Bigintervaloc}[1]{\Bigl]#1\Bigr]}
-\newcommand{\Bigintervaloo}[1]{\Bigl]#1\Bigr[}
-\newcommand{\biggintervalcc}[1]{\biggl[#1\biggr]}
-\newcommand{\biggintervalco}[1]{\biggl[#1\biggr[}
-\newcommand{\biggintervaloc}[1]{\biggl]#1\biggr]}
-\newcommand{\biggintervaloo}[1]{\biggl]#1\biggr[}
-\newcommand{\Biggintervalcc}[1]{\Biggl[#1\Biggr]}
-\newcommand{\Biggintervalco}[1]{\Biggl[#1\Biggr[}
-\newcommand{\Biggintervaloc}[1]{\Biggl]#1\Biggr]}
-\newcommand{\Biggintervaloo}[1]{\Biggl]#1\Biggr[}
-
-\newcommand{\abs}[1]{\mathopen| #1 \mathclose|}
-\newcommand{\bigabs}[1]{\bigl| #1 \bigr|}
-\newcommand{\Bigabs}[1]{\Bigl| #1 \Bigr|}
-\newcommand{\biggabs}[1]{\biggl| #1 \biggr|}
-\newcommand{\Biggabs}[1]{\Biggl| #1 \Biggr|}
-
-\newcommand{\norm}[1]{\mathopen\| #1 \mathclose\|}
-\newcommand{\bignorm}[1]{\bigl\| #1 \bigr\|}
-\newcommand{\Bignorm}[1]{\Bigl\| #1 \Bigr\|}
-\newcommand{\biggnorm}[1]{\biggl\| #1 \biggr\|}
-\newcommand{\Biggnorm}[1]{\Biggl\| #1 \Biggr\|}
-
-
-\newcommand{\intd}{\,\mathrm{d}}
-\newcommand{\I}{{\textbf{\textit{i\/}}}}
-
-\newcommand{\wto}{\rightharpoonup}                       % weak convergence
-\newcommand{\subto}{\hookrightarrow}                     % arrow for inclusions
-\newcommand{\id}{{\mathrm{id}}}                          % identity map
-\newcommand{\dom}{\mathop{\operator@font dom}\nolimits}  % domain (initial set)
-\newcommand{\codom}{\mathop{\operator@font codom}\nolimits}% co-domain (target)
-\newcommand{\Dom}{\mathop{\operator@font Dom}\nolimits}  % domain of definition
-\newcommand{\Ran}{\mathop{\operator@font Im}\nolimits}   % range
-\newcommand{\Ker}{\mathop{\operator@font Ker}\nolimits}  % kernel of lin. map
-\newcommand{\supp}{\mathop{\operator@font supp}\nolimits}% support of a function
-\newcommand{\e}{{\operator@font e}}% exp
-
-\renewcommand\limsup{\mathop{\overline{\operator@font lim}}}
-\renewcommand\liminf{\mathop{\underline{\operator@font lim}}}
-\newcommand\order{\mathop{\operator@font o}\nolimits}% small o of ...
-\newcommand\Order{\mathop{\operator@font O}\nolimits}% big O of ...
-
-\AtBeginDocument{%
-  \ifx\upharpoonright\@undefined
-    \newcommand\restrict{\mathclose|}% restriction, usage:
-    \newcommand\bigrestrict{\bigr|}%   $f\restrict E$ or
-    \newcommand\Bigrestrict{\Bigr|}%   $f\restrict_E$
-  \else
-    \newcommand\restrict{\mathclose\upharpoonright}%
-    \newcommand\bigrestrict{\mathclose\upharpoonright}% (not delimiter)
-    \newcommand\Bigrestrict{\Bigr\upharpoonright}%
-  \fi    % \mathclose is necessary for the symbol to be close enough...!
-  %
-  \@ifundefined{leqslant}{}{\let\le=\leqslant  \let\leq=\leqslant}%
-  \@ifundefined{geqslant}{}{\let\ge=\geqslant  \let\geq=\geqslant}%
-  \@ifundefined{nleqslant}{\newcommand\nle{\not\le}}{\let\nle=\nleqslant}%
-  \@ifundefined{ngeqslant}{\newcommand\nge{\not\ge}}{\let\nge=\ngeqslant}%
-}
-
-% .......... Topology ..................................................
-%
-\newcommand\Nbd{\mathop{\operator@font Nbd}\nolimits}   % set of neighborhoods
-\newcommand\Int{\mathop{\operator@font int}\nolimits}   % interior of a set
-\newcommand\cl{\mathop{\operator@font cl}\nolimits}     % closure of a set
-\newcommand\bd{\mathop{\operator@font b\kern -.5mm d}\nolimits} % boundary
-
-% .......... Logic ..................................................
-%
-\newcommand{\limplies}{\Rightarrow}
-
-% .......... Misc ...................................................
-%
-\let\phi=\varphi
-\let\epsilon=\varepsilon
