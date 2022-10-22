@@ -19,6 +19,36 @@ Original work Christophe Troestler at https://github.com/Chris00/latex-umons
 - `letter-umons.cls` is a class to write letters according to the
   UMONS layout.
 
+## Pandoc template
+
+To generate a presentation with Pandoc, create a markdown file
+`presentation.md`:
+
+```markdown
+---
+title: "My wonderful presentation"
+author: "Author name"
+institute: "Institute name"
+documentclass: beamer
+beamer: true
+theme: "UMONS"
+---
+
+# General information
+
+## Themes, fonts, etc.
+
+- I use default **pandoc** themes.
+- This presentation is made with **Frankfurt** theme and **beaver** color theme.
+- I like **professionalfonts** font scheme.
+```
+
+Then, to generate the presentation in PDF, run:
+
+```shell
+pandoc presentation.md --from markdown --slide-level 2 --shift-heading-level=0 -s --to=beamer --template src/beamer/templates/beamer.latex -o presentation.pdf
+```
+
 ## Installation
 
 There are multiple ways to install this project. One of the practical
