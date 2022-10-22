@@ -34,9 +34,27 @@
 
             tlType = "run";
         };
+
+        tex = pkgs.texlive.combine {
+          inherit (pkgs.texlive) scheme-full latex-bin latexmk;
+          umons-latex = {
+            pkgs = [ umons-latex ];
+          };
+        };
       in
       {
         # Nix shell / nix build
         packages.default = umons-latex;
+
+        # Nix develop
+        devShells.default = pkgs.mkShellNoCC {
+          name = "latex-umons-devShell";
+          buildInputs = [
+            tex
+            pkgs.pandoc
+            pkgs.nixpkgs-fmt
+            pkgs.nixfmt
+          ];
+        };
       });
 }
