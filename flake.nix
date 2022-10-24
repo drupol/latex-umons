@@ -7,16 +7,9 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
-    with flake-utils.lib; eachSystem allSystems (system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          config = {
-            allowUnfreePredicate = (pkg: true);
-          };
-        };
-
-        umons-latex = pkgs.stdenv.mkDerivation {
+    let
+      overlay-latex-umons = nixpkgs: final: prev: {
+        umons-latex = prev.stdenv.mkDerivation {
             name = "umons-latex";
             pname = "umons-latex";
             src = self;
@@ -34,17 +27,32 @@
 
             tlType = "run";
         };
+      };
+    in
+    {
+      overlays.default = (overlay-latex-umons nixpkgs.outPath);
+    } //
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        overlays = [
+          self.overlays.default
+        ];
+
+        pkgs = import nixpkgs {
+          inherit overlays system;
+        };
 
         tex = pkgs.texlive.combine {
           inherit (pkgs.texlive) scheme-full latex-bin latexmk;
+
           umons-latex = {
-            pkgs = [ umons-latex ];
+            pkgs = [ pkgs.umons-latex ];
           };
         };
       in
       {
         # Nix shell / nix build
-        packages.default = umons-latex;
+        packages.default = pkgs.umons-latex;
 
         # Nix develop
         devShells.default = pkgs.mkShellNoCC {
