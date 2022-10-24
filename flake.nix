@@ -9,28 +9,28 @@
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     let
       overlay-latex-umons = nixpkgs: final: prev: {
-        umons-latex = prev.stdenv.mkDerivation {
-            name = "umons-latex";
-            pname = "umons-latex";
-            src = self;
+        latex-umons = prev.stdenv.mkDerivation {
+          name = "latex-umons";
+          pname = "latex-umons";
+          src = self;
 
-            dontBuild = true;
+          dontBuild = true;
 
-            installPhase = ''
-                runHook preInstall
+          installPhase = ''
+            runHook preInstall
 
-                mkdir -p $out/tex/latex/umons
-                cp -ar $src/src/* $out/tex/latex/umons
+            mkdir -p $out/tex/latex/umons
+            cp -ar $src/src/* $out/tex/latex/umons
 
-                runHook postInstall
-            '';
+            runHook postInstall
+          '';
 
-            tlType = "run";
+          tlType = "run";
         };
       };
     in
     {
-      overlays.default = (overlay-latex-umons nixpkgs.outPath);
+      overlays.default = overlay-latex-umons nixpkgs;
     } //
     flake-utils.lib.eachDefaultSystem (system:
       let
@@ -45,14 +45,14 @@
         tex = pkgs.texlive.combine {
           inherit (pkgs.texlive) scheme-full latex-bin latexmk;
 
-          umons-latex = {
-            pkgs = [ pkgs.umons-latex ];
+          latex-umons = {
+            pkgs = [ pkgs.latex-umons ];
           };
         };
       in
       {
         # Nix shell / nix build
-        packages.default = pkgs.umons-latex;
+        packages.default = pkgs.latex-umons;
 
         # Nix develop
         devShells.default = pkgs.mkShellNoCC {

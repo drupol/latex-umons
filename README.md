@@ -84,7 +84,7 @@ flake file as such:
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    umons.url = "github:drupol/latex-umons";
+    latex-umons.url = "github:drupol/latex-umons";
   };
 ```
 
@@ -94,7 +94,7 @@ Then, build `pkgs` using the default overlay:
     pkgs = import nixpkgs
     {
         overlays = [
-            umons.overlays.default
+            latex-umons.overlays.default
         ];
 
         inherit system;
