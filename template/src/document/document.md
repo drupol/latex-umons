@@ -1,5 +1,6 @@
 ---
 title: "My wonderful document"
+subtitle: "My subtitle"
 author: "Author name"
 institute: "Institute name"
 department: informatics
