@@ -3,7 +3,7 @@ title: "My wonderful document"
 author: "Author name"
 institute: "Institute name"
 date: date
-theme: "UMONS"
+documentclass: exercice-umons
 ---
 
 # General information
