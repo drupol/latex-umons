@@ -47,7 +47,6 @@
             runHook preInstall
 
             mkdir -p $out
-            cp document.pdf $out/
             cp presentation.pdf $out/
 
             runHook postInstall
@@ -74,7 +73,6 @@
 
             mkdir -p $out
             cp document.pdf $out/
-            cp presentation.pdf $out/
 
             runHook postInstall
           '';
