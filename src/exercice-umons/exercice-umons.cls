@@ -207,7 +207,7 @@
       {\bfseries\sffamily
         \fontsize{30}{40}\fontfamily{phv}\selectfont % Helvetica
         \@title
-        \\[1.5ex] \large \@subtitle}%
+        \\[1.5ex]}%
       \fontsize{12}{14}\fontfamily{ptm}\selectfont %
 
       \vfill
