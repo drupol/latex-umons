@@ -72,57 +72,11 @@ theme has been correctly installed.
 
 ### Installation with Nix
 
-When using Nix flake to build LaTeX document, you can use this repository as a
-flake input and build a customized version of Texlive including this theme.
-
-The current project provides a Nix overlay through its flake file.
-
-To use this theme in your document, `theme-ec` must be an input of your own
-flake file as such:
-
-```nix
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-    latex-umons.url = "github:drupol/latex-umons";
-  };
-```
-
-Then, build `pkgs` using the default overlay:
-
-```nix
-    pkgs = import nixpkgs
-    {
-        overlays = [
-            latex-umons.overlays.default
-        ];
-
-        inherit system;
-    };
-
-```
-
-And then, you can use the package `latex-umons` to build the `tex`
-derivation:
-
-```nix
-    tex = pkgs.texlive.combine {
-        inherit (pkgs.texlive) scheme-full latex-bin latexmk;
-
-        latex-umons = {
-            pkgs = [ pkgs.latex-umons ];
-        };
-    };
-```
-
-To verify that it has been correctly installed, run:
+This project provides a template to get you started quickly. Run the command:
 
 ```shell
-kpsewhich beamerthemeUMONS.sty
+nix flake new --template github:drupol/latex-umons /your/new-project/path
 ```
-
-The return of that command should be a full path to the file, meaning that the
-LaTeX UMons tex files has been correctly installed.
 
 [tests-exemple.tex]: tests-exemple.tex
 [tests-exemple2.tex]: tests-exemple2.tex

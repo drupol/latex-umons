@@ -31,6 +31,12 @@
     in
     {
       overlays.default = overlay-latex-umons nixpkgs;
+
+      # nix flake new --template templates#default ./my-new-document
+      templates.default = {
+        path = ./template;
+        description = "A template for creating PDF document with UMons theme with Pandoc or LaTeX.";
+      };
     } //
     flake-utils.lib.eachDefaultSystem (system:
       let
