@@ -28,7 +28,33 @@
         };
       in
       {
-        packages.default = pkgs.stdenvNoCC.mkDerivation {
+        packages.presentation = pkgs.stdenvNoCC.mkDerivation {
+          name = "umons-presentation";
+
+          src = self;
+
+          buildInputs = [
+            tex
+            pkgs.gnumake
+            pkgs.pandoc
+          ];
+
+          buildPhase = ''
+            make build-presentation
+          '';
+
+          installPhase = ''
+            runHook preInstall
+
+            mkdir -p $out
+            cp document.pdf $out/
+            cp presentation.pdf $out/
+
+            runHook postInstall
+          '';
+        };
+
+        packages.document = pkgs.stdenvNoCC.mkDerivation {
           name = "umons-document";
 
           src = self;
@@ -39,9 +65,14 @@
             pkgs.pandoc
           ];
 
+          buildPhase = ''
+            make build-document
+          '';
+
           installPhase = ''
             runHook preInstall
 
+            mkdir -p $out
             cp document.pdf $out/
             cp presentation.pdf $out/
 
