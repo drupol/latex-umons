@@ -207,9 +207,8 @@
       {\bfseries\sffamily
         \fontsize{30}{40}\fontfamily{phv}\selectfont % Helvetica
         \@title
-        \\[1.5ex]}%
+        \\[1.5ex] \large \@subtitle}%
       \fontsize{12}{14}\fontfamily{ptm}\selectfont %
-        \@subtitle
 
       \vfill
       \begin{tabular}[t]{@{}r@{ }l@{}}
