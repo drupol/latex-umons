@@ -209,6 +209,7 @@
         \@title
         \\[1.5ex]}%
       \fontsize{12}{14}\fontfamily{ptm}\selectfont %
+        \@subtitle
 
       \vfill
       \begin{tabular}[t]{@{}r@{ }l@{}}
