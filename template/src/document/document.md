@@ -2,7 +2,8 @@
 title: "My wonderful document"
 author: "Author name"
 institute: "Institute name"
-date: date
+department: informatics
+date: 2022-2023
 documentclass: exercice-umons
 ---
 
