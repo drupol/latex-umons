@@ -51,13 +51,13 @@ jobs:
               uses: actions/upload-artifact@v3
               with:
                   name: assets
-                  path: document.pdf
+                  path: result/document.pdf
 
             - name: Upload build assets
               uses: actions/upload-artifact@v3
               with:
                   name: assets
-                  path: presentation.pdf
+                  path: result/presentation.pdf
 
     release:
         name: "Create tag/pre-release"
