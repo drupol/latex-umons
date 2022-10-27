@@ -55,8 +55,62 @@
             pkgs = [ pkgs.latex-umons ];
           };
         };
+
+        presentation = pkgs.stdenvNoCC.mkDerivation {
+          name = "umons-presentation";
+
+          src = self;
+
+          buildInputs = [
+            tex
+            pkgs.gnumake
+            pkgs.pandoc
+          ];
+
+          buildPhase = ''
+            make -C template build-presentation
+          '';
+
+          installPhase = ''
+            runHook preInstall
+
+            mkdir -p $out
+            cp template/presentation.pdf $out/
+
+            runHook postInstall
+          '';
+        };
+
+        document = pkgs.stdenvNoCC.mkDerivation {
+          name = "umons-document";
+
+          src = self;
+
+          buildInputs = [
+            tex
+            pkgs.gnumake
+            pkgs.pandoc
+          ];
+
+          buildPhase = ''
+            make -C template build-document
+          '';
+
+          installPhase = ''
+            runHook preInstall
+
+            mkdir -p $out
+            cp template/document.pdf $out/
+
+            runHook postInstall
+          '';
+        };
+
       in
       {
+        packages.presentation = presentation;
+        packages.document = document;
+
         # Nix shell / nix build
         packages.default = pkgs.latex-umons;
 
@@ -70,5 +124,8 @@
             pkgs.nixfmt
           ];
         };
+
+        checks.document = document;
+        checks.presentation = presentation;
       });
 }
