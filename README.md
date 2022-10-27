@@ -71,5 +71,13 @@ kpsewhich beamerthemeUMONS.sty
 The return of that command should be a full path to the file, meaning that the
 theme has been correctly installed.
 
+## Demo
+
+Every time a commit is made in this repository, new PDFs are generated and added
+to a Github pre-release.
+
+Visit the [latest release][latest releast] to check them out.
+
 [install nix]: https://nixos.org/download.html
 [nix flake wiki]: https://nixos.wiki/wiki/Flakes
+[latest release]: https://github.com/drupol/latex-umons/releases/latest
