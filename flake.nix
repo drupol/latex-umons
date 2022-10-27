@@ -4,15 +4,19 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    nix-filter.url = github:numtide/nix-filter;
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, nix-filter, ... }@inputs:
     let
       overlay-latex-umons = nixpkgs: final: prev: {
         latex-umons = prev.stdenv.mkDerivation {
           name = "latex-umons";
           pname = "latex-umons";
-          src = self;
+          src = nix-filter.lib.filter {
+            root = ./.;
+            exclude = [ ./template ];
+          };
 
           dontBuild = true;
 
@@ -40,12 +44,11 @@
     } //
     flake-utils.lib.eachDefaultSystem (system:
       let
-        overlays = [
-          self.overlays.default
-        ];
-
         pkgs = import nixpkgs {
-          inherit overlays system;
+          overlays = [
+            self.overlays.default
+          ];
+          inherit system;
         };
 
         tex = pkgs.texlive.combine {
@@ -56,114 +59,46 @@
           };
         };
 
-        presentation = pkgs.stdenvNoCC.mkDerivation {
-          name = "umons-presentation";
+        documentNames = [
+          "document"
+          "exprog"
+          "memoire"
+          "presentation"
+        ];
 
-          src = self;
+        documentTypes = nixpkgs.lib.genAttrs documentNames (
+          name:
+          pkgs.stdenvNoCC.mkDerivation {
+            name = "umons-" + name;
 
-          buildInputs = [
-            tex
-            pkgs.gnumake
-            pkgs.pandoc
-          ];
+            src = pkgs.lib.cleanSource ./.;
 
-          buildPhase = ''
-            make -C template build-presentation
-          '';
+            buildInputs = [
+              tex
+              pkgs.gnumake
+              pkgs.pandoc
+            ];
 
-          installPhase = ''
-            runHook preInstall
+            buildPhase = ''
+              make -C template build-${name}
+            '';
 
-            mkdir -p $out
-            cp template/presentation.pdf $out/
+            installPhase = ''
+              runHook preInstall
 
-            runHook postInstall
-          '';
-        };
+              mkdir -p $out
+              cp template/${name}.pdf $out/
 
-        document = pkgs.stdenvNoCC.mkDerivation {
-          name = "umons-document";
-
-          src = self;
-
-          buildInputs = [
-            tex
-            pkgs.gnumake
-            pkgs.pandoc
-          ];
-
-          buildPhase = ''
-            make -C template build-document
-          '';
-
-          installPhase = ''
-            runHook preInstall
-
-            mkdir -p $out
-            cp template/document.pdf $out/
-
-            runHook postInstall
-          '';
-        };
-
-        exprog = pkgs.stdenvNoCC.mkDerivation {
-          name = "umons-exprog";
-
-          src = self;
-
-          buildInputs = [
-            tex
-            pkgs.gnumake
-            pkgs.pandoc
-          ];
-
-          buildPhase = ''
-            make -C template build-exprog
-          '';
-
-          installPhase = ''
-            runHook preInstall
-
-            mkdir -p $out
-            cp template/exprog.pdf $out/
-
-            runHook postInstall
-          '';
-        };
-
-        memoire = pkgs.stdenvNoCC.mkDerivation {
-          name = "umons-memoire";
-
-          src = self;
-
-          buildInputs = [
-            tex
-            pkgs.gnumake
-            pkgs.pandoc
-          ];
-
-          buildPhase = ''
-            make -C template build-memoire
-          '';
-
-          installPhase = ''
-            runHook preInstall
-
-            mkdir -p $out
-            cp template/memoire.pdf $out/
-
-            runHook postInstall
-          '';
-        };
+              runHook postInstall
+            '';
+          }
+        );
       in
       {
-        packages.document = document;
-        packages.exprog = exprog;
-        packages.memoire = memoire;
-        packages.presentation = presentation;
-
         # Nix shell / nix build
-        packages.default = pkgs.latex-umons;
+        packages = documentTypes // {
+          "default" = pkgs.latex-umons;
+        };
 
         # Nix develop
         devShells.default = pkgs.mkShellNoCC {
@@ -176,9 +111,6 @@
           ];
         };
 
-        checks.document = document;
-        checks.exprog = exprog;
-        checks.memoire = memoire;
-        checks.presentation = presentation;
+        checks = documentTypes;
       });
 }
