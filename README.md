@@ -76,7 +76,7 @@ theme has been correctly installed.
 Every time a commit is made in this repository, new PDFs are generated and added
 to a Github pre-release.
 
-Visit the [latest release][latest releast] to check them out.
+Visit the [latest release][latest release] to check them out.
 
 [install nix]: https://nixos.org/download.html
 [nix flake wiki]: https://nixos.wiki/wiki/Flakes
