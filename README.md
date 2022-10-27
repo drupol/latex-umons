@@ -7,7 +7,7 @@ Mons but may also be of interest to a larger audience.
 It also contains a flake file for facilitating the integration into your own
 document using Nix.
 
-Original work Christophe Troestler at https://github.com/Chris00/latex-umons
+Original work by Christophe Troestler at https://github.com/Chris00/latex-umons
 
 ## LaTeX Classes
 
