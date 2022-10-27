@@ -30,6 +30,8 @@ jobs:
 
             - name: Check out source files
               uses: actions/checkout@v3
+              with:
+                fetch-depth: 1
 
             - name: Create global variables
               id: version
