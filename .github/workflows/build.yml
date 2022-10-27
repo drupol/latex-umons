@@ -45,19 +45,21 @@ jobs:
             - name: Build document
               run: |
                   nix build .#document
+                  cp result/document.pdf document.pdf
                   nix build .#presentation
+                  cp result/presentation.pdf presentation.pdf
 
             - name: Upload build assets
               uses: actions/upload-artifact@v3
               with:
                   name: assets
-                  path: result/document.pdf
+                  path: document.pdf
 
             - name: Upload build assets
               uses: actions/upload-artifact@v3
               with:
                   name: assets
-                  path: result/presentation.pdf
+                  path: presentation.pdf
 
     release:
         name: "Create tag/pre-release"
