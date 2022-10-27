@@ -25,6 +25,9 @@ rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 build-document :
 	pandoc src/document/*.md --from markdown --template src/templates/umons.latex -o document.pdf
 
+build-exprog :
+	pandoc src/exprog/*.md --from markdown --template src/templates/umons.latex -o exprog.pdf
+
 build-presentation :
 	pandoc src/presentation/*.md --from markdown --slide-level 2 --shift-heading-level=0 -s --to=beamer --template src/templates/beamer.latex -o presentation.pdf
 

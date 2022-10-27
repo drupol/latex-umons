@@ -106,10 +106,35 @@
           '';
         };
 
+        exprog = pkgs.stdenvNoCC.mkDerivation {
+          name = "umons-exprog";
+
+          src = self;
+
+          buildInputs = [
+            tex
+            pkgs.gnumake
+            pkgs.pandoc
+          ];
+
+          buildPhase = ''
+            make -C template build-exprog
+          '';
+
+          installPhase = ''
+            runHook preInstall
+
+            mkdir -p $out
+            cp template/exprog.pdf $out/
+
+            runHook postInstall
+          '';
+        };
       in
       {
-        packages.presentation = presentation;
         packages.document = document;
+        packages.exprog = exprog;
+        packages.presentation = presentation;
 
         # Nix shell / nix build
         packages.default = pkgs.latex-umons;
@@ -126,6 +151,7 @@
         };
 
         checks.document = document;
+        checks.exprog = exprog;
         checks.presentation = presentation;
       });
 }
