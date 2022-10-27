@@ -21,25 +21,6 @@ Original work Christophe Troestler at https://github.com/Chris00/latex-umons
 
 ## Installation
 
-There are multiple ways to install this project. One of the practical
-ways to install it is to install once and use it in any of your document without
-duplicating files.
-
-First, you must clone this repository in a place of yours and then do:
-
-```shell
-make install
-```
-
-To verify that it has been correctly installed, run:
-
-```shell
-kpsewhich beamerthemeUMONS.sty
-```
-
-The return of that command should be a full path to the file, meaning that the
-theme has been correctly installed.
-
 ### Installation with Nix
 
 The easiest way to use this project is to [install Nix][install nix].
@@ -68,6 +49,27 @@ Run the following command to build the presentation:
 nix build .#presentation
 open result/presentation.pdf
 ```
+
+### Installation without Nix
+
+There are multiple ways to install this project. One of the practical
+ways to install it is to install once and use it in any of your document without
+duplicating files.
+
+First, you must clone this repository in a place of yours and then do:
+
+```shell
+make install
+```
+
+To verify that it has been correctly installed, run:
+
+```shell
+kpsewhich beamerthemeUMONS.sty
+```
+
+The return of that command should be a full path to the file, meaning that the
+theme has been correctly installed.
 
 [install nix]: https://nixos.org/download.html
 [nix flake wiki]: https://nixos.wiki/wiki/Flakes
