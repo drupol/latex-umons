@@ -456,6 +456,10 @@ $if(service)$
 \service{$service$}
 $endif$
 
+$if(directeur)$
+\directeur{$directeur$}
+$endif$
+
 % From https://github.com/Wandmalfarbe/pandoc-latex-template/blob/master/eisvogel.tex
 \usepackage[headsepline,footsepline]{scrlayer-scrpage}
 \newpairofpagestyles{umons}{

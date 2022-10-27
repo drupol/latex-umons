@@ -130,10 +130,36 @@
             runHook postInstall
           '';
         };
+
+        memoire = pkgs.stdenvNoCC.mkDerivation {
+          name = "umons-memoire";
+
+          src = self;
+
+          buildInputs = [
+            tex
+            pkgs.gnumake
+            pkgs.pandoc
+          ];
+
+          buildPhase = ''
+            make -C template build-memoire
+          '';
+
+          installPhase = ''
+            runHook preInstall
+
+            mkdir -p $out
+            cp template/memoire.pdf $out/
+
+            runHook postInstall
+          '';
+        };
       in
       {
         packages.document = document;
         packages.exprog = exprog;
+        packages.memoire = memoire;
         packages.presentation = presentation;
 
         # Nix shell / nix build
@@ -152,6 +178,7 @@
 
         checks.document = document;
         checks.exprog = exprog;
+        checks.memoire = memoire;
         checks.presentation = presentation;
       });
 }

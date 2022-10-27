@@ -42,7 +42,7 @@ jobs:
               run: |
                   nix flake check
 
-            - name: Build document
+            - name: Build documents
               run: |
                   nix build .#document
                   cp result/document.pdf document.pdf
@@ -50,6 +50,8 @@ jobs:
                   cp result/presentation.pdf presentation.pdf
                   nix build .#exprog
                   cp result/exprog.pdf exprog.pdf
+                  nix build .#memoire
+                  cp result/memoire.pdf memoire.pdf
 
             - name: Upload build assets
               uses: actions/upload-artifact@v3
@@ -68,6 +70,12 @@ jobs:
               with:
                   name: assets
                   path: exprog.pdf
+
+            - name: Upload build assets
+              uses: actions/upload-artifact@v3
+              with:
+                  name: assets
+                  path: memoire.pdf
 
     release:
         name: "Create tag/pre-release"
@@ -106,7 +114,7 @@ jobs:
               with:
                   upload_url: ${{ needs.release.outputs.upload_url }}
                   asset_path: assets/document.pdf
-                  asset_name: ${{ github.run_number }}--exercice-umons--${{ needs.dependencies.outputs.version }}.pdf
+                  asset_name: ${{ github.run_number }}--document--${{ needs.dependencies.outputs.version }}.pdf
                   asset_content_type: application/pdf
 
             - name: Upload release assets
@@ -127,4 +135,14 @@ jobs:
                   upload_url: ${{ needs.release.outputs.upload_url }}
                   asset_path: assets/exprog.pdf
                   asset_name: ${{ github.run_number }}--exprog--${{ needs.dependencies.outputs.version }}.pdf
+                  asset_content_type: application/pdf
+
+            - name: Upload release assets
+              uses: actions/upload-release-asset@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  upload_url: ${{ needs.release.outputs.upload_url }}
+                  asset_path: assets/memoire.pdf
+                  asset_name: ${{ github.run_number }}--memoire--${{ needs.dependencies.outputs.version }}.pdf
                   asset_content_type: application/pdf

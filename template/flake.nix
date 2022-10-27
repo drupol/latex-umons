@@ -78,6 +78,31 @@
           '';
         };
 
+        packages.memoire = pkgs.stdenvNoCC.mkDerivation {
+          name = "umons-memoire";
+
+          src = self;
+
+          buildInputs = [
+            tex
+            pkgs.gnumake
+            pkgs.pandoc
+          ];
+
+          buildPhase = ''
+            make build-memoire
+          '';
+
+          installPhase = ''
+            runHook preInstall
+
+            mkdir -p $out
+            cp memoire.pdf $out/
+
+            runHook postInstall
+          '';
+        };
+
         # Nix develop
         devShells.default = pkgs.mkShellNoCC {
           name = "umons-document-devshell";
