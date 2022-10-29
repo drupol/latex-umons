@@ -29,7 +29,7 @@ build-exprog :
 	pandoc src/exprog/*.md --from markdown -s --template src/templates/umons.latex -o exprog.pdf
 
 build-presentation :
-	pandoc src/presentation/*.md --from markdown --slide-level 2 --shift-heading-level=0 -s --to=beamer --template src/templates/beamer.latex -o presentation.pdf
+	pandoc src/presentation/*.md --from markdown --slide-level 2 --shift-heading-level=0 -s --to=beamer --template src/templates/umons.latex -o presentation.pdf
 
 build-memoire :
 	pandoc src/memoire/*.md --from markdown -s --template src/templates/umons.latex -o memoire.pdf

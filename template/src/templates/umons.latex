@@ -460,6 +460,8 @@ $if(directeur)$
 \directeur{$directeur$}
 $endif$
 
+$if(beamer)$
+$else$
 % From https://github.com/Wandmalfarbe/pandoc-latex-template/blob/master/eisvogel.tex
 \usepackage[headsepline,footsepline]{scrlayer-scrpage}
 \newpairofpagestyles{umons}{
@@ -473,6 +475,7 @@ $endif$
   \addtokomafont{pageheadfoot}{\upshape}
 }
 \pagestyle{umons}
+$endif$
 
 \begin{document}
 $if(has-frontmatter)$
