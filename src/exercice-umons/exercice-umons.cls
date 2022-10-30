@@ -136,6 +136,10 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\def\umons@professor{}
+\newcommand{\professor}[1]{%
+  \def\umons@professor{#1}%
+  \translatelet{\@professor@name}{Professor}}
 \def\umons@service{}
 \newcommand{\service}[1]{%
   \def\umons@service{#1}%
@@ -212,6 +216,11 @@
 
       \vfill
       \begin{tabular}[t]{@{}r@{ }l@{}}
+        \ifx \umons@professor\empty \else
+        \textbf{\@professor@name\umons@activecolon}&
+        \begin{tabular}[t]{@{}l@{}} \umons@professor \end{tabular}
+        \fi
+        \\[2\jot]
         \ifx \umons@service\empty \else
         \textbf{\@service@name\umons@activecolon}&
         \begin{tabular}[t]{@{}l@{}} \umons@service \end{tabular}%

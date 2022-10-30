@@ -1,11 +1,13 @@
 ---
-title: "My wonderful document"
-subtitle: "My subtitle"
-author: "Author name"
-institute: "Institute name"
-department: informatics
-date: 2022-2023
-documentclass: exercice-umons
+title: "TITLE"
+subtitle: "SUBTITLE"
+author: "AUTHOR"
+institute: "INSTITUTE"
+department: "DEPARTMENT"
+professor: "PROFESSOR"
+service: "SERVICE"
+date: "2022-2023"
+documentclass: "exercice-umons"
 ---
 
 # General information

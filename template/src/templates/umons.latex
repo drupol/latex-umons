@@ -460,6 +460,10 @@ $if(directeur)$
 \directeur{$directeur$}
 $endif$
 
+$if(professor)$
+\professor{$professor$}
+$endif$
+
 $if(beamer)$
 $else$
 % From https://github.com/Wandmalfarbe/pandoc-latex-template/blob/master/eisvogel.tex
