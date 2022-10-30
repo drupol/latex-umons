@@ -219,13 +219,13 @@
         \ifx \umons@professor\empty \else
         \textbf{\@professor@name\umons@activecolon}&
         \begin{tabular}[t]{@{}l@{}} \umons@professor \end{tabular}
-        \fi
         \\[2\jot]
+        \fi
         \ifx \umons@service\empty \else
         \textbf{\@service@name\umons@activecolon}&
         \begin{tabular}[t]{@{}l@{}} \umons@service \end{tabular}%
-        \fi
         \\[2\jot]
+        \fi
         \ifx \@author\empty \else
         \textbf{Author\umons@activecolon}&
         \begin{tabular}[t]{@{}l@{}} \@author \end{tabular}%

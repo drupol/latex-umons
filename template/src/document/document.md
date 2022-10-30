@@ -2,7 +2,6 @@
 title: "TITLE"
 subtitle: "SUBTITLE"
 author: "AUTHOR"
-institute: "INSTITUTE"
 department: "DEPARTMENT"
 professor: "PROFESSOR"
 service: "SERVICE"
