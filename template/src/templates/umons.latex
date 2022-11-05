@@ -481,6 +481,16 @@ $else$
 \pagestyle{umons}
 $endif$
 
+%
+% blockquote
+%
+\definecolor{blockquote-border}{RGB}{221,221,221}
+\definecolor{blockquote-text}{RGB}{119,119,119}
+\usepackage{mdframed}
+\newmdenv[rightline=false,bottomline=false,topline=false,linewidth=3pt,linecolor=blockquote-border,skipabove=\parskip]{customblockquote}
+\renewenvironment{quote}{\begin{customblockquote}\list{}{\rightmargin=0em\leftmargin=0em}%
+\item\relax\color{blockquote-text}\ttfamily\ignorespaces}{\unskip\unskip\endlist\end{customblockquote}}
+
 \begin{document}
 $if(has-frontmatter)$
 \frontmatter
