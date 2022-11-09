@@ -24,7 +24,28 @@
             runHook preInstall
 
             mkdir -p $out/tex/latex/umons
-            cp -ar $src/src/* $out/tex/latex/umons
+            cp -ar $src/src/latex/* $out/tex/latex/umons
+
+            runHook postInstall
+          '';
+
+          tlType = "run";
+        };
+        pandoc-template-umons = prev.stdenv.mkDerivation {
+          name = "pandoc-template-umons";
+          pname = "pandoc-template-umons";
+          src = nix-filter.lib.filter {
+            root = ./.;
+            exclude = [ ./template ];
+          };
+
+          dontBuild = true;
+
+          installPhase = ''
+            runHook preInstall
+
+            mkdir -p $out/pandoc
+            cp -ar $src/src/pandoc/* $out/pandoc/
 
             runHook postInstall
           '';
@@ -50,6 +71,10 @@
           ];
           inherit system;
         };
+
+        pandoc = pkgs.writeShellScriptBin "pandoc" ''
+          ${pkgs.pandoc}/bin/pandoc --data-dir ${pkgs.pandoc-template-umons} $@
+        '';
 
         tex = pkgs.texlive.combine {
           inherit (pkgs.texlive) scheme-full latex-bin latexmk;
@@ -105,7 +130,7 @@
           name = "latex-umons-devShell";
           buildInputs = [
             tex
-            pkgs.pandoc
+            pandoc
             pkgs.nixpkgs-fmt
             pkgs.nixfmt
           ];
