@@ -20,87 +20,56 @@
           ];
         };
 
+        pandoc = pkgs.writeShellScriptBin "pandoc" ''
+          ${pkgs.pandoc}/bin/pandoc --data-dir ${pkgs.pandoc-template-umons} $@
+        '';
+
         tex = pkgs.texlive.combine {
           inherit (pkgs.texlive) scheme-full latex-bin latexmk;
           latex-umons = {
             pkgs = [ pkgs.latex-umons ];
           };
         };
+
+        documentNames = [
+          "document"
+          "exprog"
+          "memoire"
+          "presentation"
+        ];
+
+        documentTypes = nixpkgs.lib.genAttrs documentNames (
+          name:
+          pkgs.stdenvNoCC.mkDerivation {
+            name = "umons-" + name;
+
+            src = pkgs.lib.cleanSource ./.;
+
+            buildInputs = [
+              tex
+              pandoc
+              pkgs.gnumake
+            ];
+
+            buildPhase = ''
+              make build-${name}
+            '';
+
+            installPhase = ''
+              runHook preInstall
+
+              mkdir -p $out
+              cp template/${name}.pdf $out/
+
+              runHook postInstall
+            '';
+          }
+        );
       in
       {
-        packages.presentation = pkgs.stdenvNoCC.mkDerivation {
-          name = "umons-presentation";
-
-          src = self;
-
-          buildInputs = [
-            tex
-            pkgs.gnumake
-            pkgs.pandoc
-          ];
-
-          buildPhase = ''
-            make build-presentation
-          '';
-
-          installPhase = ''
-            runHook preInstall
-
-            mkdir -p $out
-            cp presentation.pdf $out/
-
-            runHook postInstall
-          '';
-        };
-
-        packages.document = pkgs.stdenvNoCC.mkDerivation {
-          name = "umons-document";
-
-          src = self;
-
-          buildInputs = [
-            tex
-            pkgs.gnumake
-            pkgs.pandoc
-          ];
-
-          buildPhase = ''
-            make build-document
-          '';
-
-          installPhase = ''
-            runHook preInstall
-
-            mkdir -p $out
-            cp document.pdf $out/
-
-            runHook postInstall
-          '';
-        };
-
-        packages.memoire = pkgs.stdenvNoCC.mkDerivation {
-          name = "umons-memoire";
-
-          src = self;
-
-          buildInputs = [
-            tex
-            pkgs.gnumake
-            pkgs.pandoc
-          ];
-
-          buildPhase = ''
-            make build-memoire
-          '';
-
-          installPhase = ''
-            runHook preInstall
-
-            mkdir -p $out
-            cp memoire.pdf $out/
-
-            runHook postInstall
-          '';
+        # Nix shell / nix build
+        packages = documentTypes // {
+          "default" = documentTypes.document;
         };
 
         # Nix develop
@@ -108,8 +77,8 @@
           name = "umons-document-devshell";
           buildInputs = [
             tex
+            pandoc
             pkgs.gnumake
-            pkgs.pandoc
             pkgs.nixpkgs-fmt
             pkgs.nixfmt
           ];
