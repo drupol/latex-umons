@@ -44,8 +44,8 @@
           installPhase = ''
             runHook preInstall
 
-            mkdir -p $out/pandoc
-            cp -ar $src/src/pandoc/* $out/pandoc/
+            mkdir -p $out/templates
+            cp -ar $src/src/pandoc/* $out/templates/
 
             runHook postInstall
           '';
@@ -100,8 +100,8 @@
 
             buildInputs = [
               tex
+              pandoc
               pkgs.gnumake
-              pkgs.pandoc
             ];
 
             buildPhase = ''
