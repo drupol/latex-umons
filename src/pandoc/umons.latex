@@ -466,6 +466,7 @@ $endif$
 
 $if(beamer)$
 $else$
+\usepackage{bm}
 % From https://github.com/Wandmalfarbe/pandoc-latex-template/blob/master/eisvogel.tex
 \usepackage[headsepline,footsepline]{scrlayer-scrpage}
 \newpairofpagestyles{umons}{
