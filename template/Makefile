@@ -23,16 +23,16 @@ rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 	$(MAKE) build INPUT=src/$@/index.tex
 
 build-document :
-	pandoc src/document/*.md --from markdown -s -o document.pdf
+	pandoc src/document/*.md --from markdown -s --template=umons.latex -o document.pdf
 
 build-exprog :
-	pandoc src/exprog/*.md --from markdown -s -o exprog.pdf
+	pandoc src/exprog/*.md --from markdown -s --template=umons.latex -o exprog.pdf
 
 build-presentation :
-	pandoc src/presentation/*.md --from markdown --slide-level 2 --shift-heading-level=0 -s --to=beamer -o presentation.pdf
+	pandoc src/presentation/*.md --from markdown --slide-level 2 --shift-heading-level=0 -s --to=beamer --template=umons.latex -o presentation.pdf
 
 build-memoire :
-	pandoc src/memoire/*.md --from markdown -s -o memoire.pdf
+	pandoc src/memoire/*.md --from markdown -s --template=umons.latex -o memoire.pdf
 
 pandoc :
 	$(PANDOC_RUN) -s $(INPUT) -o $(OUTPUT)
