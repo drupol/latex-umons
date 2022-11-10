@@ -44,8 +44,8 @@
           installPhase = ''
             runHook preInstall
 
-            mkdir -p $out/templates
-            cp -ar $src/src/pandoc/* $out/templates/
+            mkdir -p $out
+            cp -ar $src/src/pandoc/* $out/
 
             runHook postInstall
           '';
