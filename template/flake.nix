@@ -59,7 +59,7 @@
               runHook preInstall
 
               mkdir -p $out
-              cp template/${name}.pdf $out/
+              cp ${name}.pdf $out/
 
               runHook postInstall
             '';
