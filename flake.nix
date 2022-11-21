@@ -10,7 +10,7 @@
   outputs = { self, nixpkgs, flake-utils, nix-filter, ... }@inputs:
     let
       overlay-latex-umons = nixpkgs: final: prev: {
-        latex-umons = prev.stdenv.mkDerivation {
+        latex-umons = prev.stdenvNoCC.mkDerivation {
           name = "latex-umons";
           pname = "latex-umons";
           src = nix-filter.lib.filter {
@@ -31,7 +31,7 @@
 
           tlType = "run";
         };
-        pandoc-template-umons = prev.stdenv.mkDerivation {
+        pandoc-template-umons = prev.stdenvNoCC.mkDerivation {
           name = "pandoc-template-umons";
           pname = "pandoc-template-umons";
           src = nix-filter.lib.filter {
