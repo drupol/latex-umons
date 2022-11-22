@@ -11,6 +11,7 @@ Original work by Christophe Troestler at https://github.com/Chris00/latex-umons
 
 ## LaTeX Classes
 
+- A Beamer theme `UMONS`,
 - `exercice-umons.cls` is a class to write regular document with proper header.
 - `memoire-umons.cls` is a simple class to write a master's thesis.
 - `tests.cls` aims to provide a simple way of composing tests.  One or
@@ -78,6 +79,65 @@ to a Github pre-release.
 
 Visit the [latest release][latest release] to check them out.
 
+## API
+
+This package is contains a `flake.nix` which exposes its derivations in an
+[overlay][nix overlays].
+
+Exposed derivations:
+- `latex-umons`: The LaTeX classes
+- `pandoc-template-umons`: The Pandoc beamer template
+
+To use it in your own package, take example on the following minimum working
+example:
+
+```nix
+{
+  description = "Simple flake";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+    latex-umons.url = "github:drupol/latex-umons";
+  };
+
+  outputs = { self, nixpkgs, flake-utils, latex-umons, ... }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs {
+          overlays = [
+            latex-umons.overlays.default
+          ];
+
+          inherit system;
+        };
+
+        pandoc = pkgs.writeShellScriptBin "pandoc" ''
+          ${pkgs.pandoc}/bin/pandoc --data-dir ${pkgs.pandoc-template-umons} $@
+        '';
+
+        tex = pkgs.texlive.combine {
+          inherit (pkgs.texlive) scheme-full latex-bin latexmk;
+
+          latex-umons = {
+            pkgs = [ pkgs.latex-umons ];
+          };
+        };
+      in
+      {
+        devShells.default = pkgs.mkShellNoCC {
+          name = "devshell";
+
+          buildInputs = [
+            tex
+            pandoc
+          ];
+        };
+      });
+}
+```
+
 [install nix]: https://nixos.org/download.html
 [nix flake wiki]: https://nixos.wiki/wiki/Flakes
 [latest release]: https://github.com/drupol/latex-umons/releases/latest
+[nix overlays]: https://nixos.wiki/wiki/Overlays
