@@ -25,7 +25,7 @@ Original work by Christophe Troestler at https://github.com/Chris00/latex-umons
 Quickly create a PDF document with Markdown using the following command:
 
 ```shell
-nix run github:drupol/latex-umons -- /path/to/your/file.md
+nix run github:drupol/latex-umons#pandoc-exercice-umons -- /path/to/your/file.md
 open pandoc-exercice-umons.pdf
 ```
 
