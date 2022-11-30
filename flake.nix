@@ -119,15 +119,19 @@
           }
         );
 
-        pandoc-exercice-umons = pkgs.writeShellScriptBin "pandoc-exercice-umons" ''
-          ${pkgs.pandoc}/bin/pandoc --from markdown --to latex -s --template=${pkgs.pandoc-template-umons}/templates/umons.latex -o pandoc-exercice-umons.pdf $@
-        '';
+        pandoc-exercice-umons = pkgs.writeShellApplication {
+          name = "pandoc-exercice-umons";
+          text = ''
+            ${pkgs.pandoc}/bin/pandoc --from markdown --to latex -s --template=${pkgs.pandoc-template-umons}/templates/umons.latex -o pandoc-exercice-umons.pdf "$@"
+          '';
+          runtimeInputs = [ tex ];
+        };
       in
       {
         # Nix shell / nix build
         packages = documentTypes // {
-          "default" = pkgs.latex-umons;
-          "pandoc-exercice-umons" = pandoc-exercice-umons;
+          default = pkgs.latex-umons;
+          pandoc-exercice-umons = pandoc-exercice-umons;
         };
 
         # Nix develop
