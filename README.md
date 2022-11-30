@@ -20,6 +20,15 @@ Original work by Christophe Troestler at https://github.com/Chris00/latex-umons
 - `exprog.cls` is an class to write homework.
 - `letter-umons.cls` is a class to write letters according to the UMONS layout.
 
+## Quick start
+
+Quickly create a PDF document with Markdown using the following command:
+
+```shell
+nix run github:drupol/latex-umons -- /path/to/your/file.md
+open pandoc-exercice-umons.pdf
+```
+
 ## Installation
 
 ### Installation with Nix

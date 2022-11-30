@@ -118,11 +118,16 @@
             '';
           }
         );
+
+        pandoc-exercice-umons = pkgs.writeShellScriptBin "pandoc-exercice-umons" ''
+          ${pkgs.pandoc}/bin/pandoc --from markdown --to latex -s --template=${pkgs.pandoc-template-umons}/templates/umons.latex -o pandoc-exercice-umons.pdf $@
+        '';
       in
       {
         # Nix shell / nix build
         packages = documentTypes // {
           "default" = pkgs.latex-umons;
+          "pandoc-exercice-umons" = pandoc-exercice-umons;
         };
 
         # Nix develop
