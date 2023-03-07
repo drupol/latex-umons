@@ -243,13 +243,22 @@
         apps =
           watcherApps
           // {
-            pandoc = { type = "app";  program = umons-pandoc-app; };
+            pandoc = {
+              type = "app";
+              program = umons-pandoc-app;
+            };
           }
           // {
-            watch = { type = "app";  program = watch-umons-pandoc-app; };
+            watch = {
+              type = "app";
+              program = watch-umons-pandoc-app;
+            };
           }
           // {
-            pandoc-exercice-umons = { type = "app"; program = throw "Please update your command, 'pandoc-exercice-umons' has been renamed into 'pandoc'."; };
+            pandoc-exercice-umons = {
+              type = "app";
+              program = throw "Please update your command, 'pandoc-exercice-umons' has been renamed into 'pandoc'.";
+            };
           };
 
         # Nix shell / nix build
