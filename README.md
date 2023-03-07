@@ -11,10 +11,10 @@ Original work by Christophe Troestler at https://github.com/Chris00/latex-umons
 
 ## LaTeX Classes
 
-- A Beamer theme `UMONS`,
+- A Beamer theme `UMONS`.
 - `exercice-umons.cls` is a class to write regular document with proper header.
 - `memoire-umons.cls` is a simple class to write a master's thesis.
-- `tests.cls` aims to provide a simple way of composing tests.  One or
+- `tests.cls` aims to provide a simple way of composing tests. One or
   more tests may be in the same file (in case, say, they share
   questions).
 - `exprog.cls` is an class to write homework.
@@ -22,12 +22,23 @@ Original work by Christophe Troestler at https://github.com/Chris00/latex-umons
 
 ## Quick start
 
-Quickly create a PDF document with Markdown using the following command:
+This project exposes multiple applications that you can use.
 
-```shell
-nix run github:drupol/latex-umons#pandoc-exercice-umons -- /path/to/your/file.md
-open pandoc-exercice-umons.pdf
-```
+1. Run `pandoc` against a specific document of yours and convert it into PDF with LaTeX and a specific LaTeX class:
+
+- `exercice-umons`: `nix run github:drupol/latex-umons#exercice-umons -- --output=result.pdf /path/to/your/file.md`
+- `exprog`: `nix run github:drupol/latex-umons#exprog -- --output=result.pdf /path/to/your/file.md`
+- `memoire-umons`: `nix run github:drupol/latex-umons#memoire-umons -- --output=result.pdf /path/to/your/file.md`
+- `presentation`: `nix run github:drupol/latex-umons#presentation -- --output=result.pdf /path/to/your/file.md`
+
+2. Run a process against a specific document of yours and convert it into PDF with LaTeX and a specific LaTeX class as soon as a change happens. The generated file will be in the current directory. To stop the process, hit <kbd>CTRL+C</kbd>.
+
+- `exercice-umons`: `nix run github:drupol/latex-umons#watch-exercice-umons -- --output=result.pdf /path/to/your/file.md`
+- `exprog`: `nix run github:drupol/latex-umons#watch-exprog -- --output=result.pdf /path/to/your/file.md`
+- `memoire-umons`: `nix run github:drupol/latex-umons#watch-memoire-umons -- --output=result.pdf /path/to/your/file.md`
+- `presentation`: `nix run github:drupol/latex-umons#watch-presentation -- --output=result.pdf /path/to/your/file.md`
+
+Since these applications are basically wrappers around `pandoc`, you can append any `pandoc` options, at your own will.
 
 ## Installation
 
@@ -94,6 +105,7 @@ This package is contains a `flake.nix` which exposes its derivations in an
 [overlay][nix overlays].
 
 Exposed derivations:
+
 - `latex-umons`: The LaTeX classes
 - `pandoc-template-umons`: The Pandoc beamer template
 

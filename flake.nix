@@ -8,7 +8,13 @@
 
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = inputs.nixpkgs.lib.systems.flakeExposed;
+      systems = [
+        "aarch64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+        "x86_64-linux"
+      ];
+
       flake = let
         overlay-latex-umons = nixpkgs: final: prev: {
           latex-umons = prev.stdenvNoCC.mkDerivation {
@@ -77,12 +83,19 @@
           inherit system;
         };
 
-        pandoc = pkgs.writeShellScriptBin "pandoc" ''
-          ${pkgs.pandoc}/bin/pandoc --data-dir ${pkgs.pandoc-template-umons} $@
-        '';
+        pandoc = pkgs.writeShellApplication {
+          name = "pandoc";
+          text = ''
+            ${pkgs.pandoc}/bin/pandoc \
+              --data-dir=${pkgs.pandoc-template-umons}
+              "$@"
+          '';
+          runtimeInputs = [tex];
+        };
 
         tex = pkgs.texlive.combine {
-          inherit (pkgs.texlive)
+          inherit
+            (pkgs.texlive)
             scheme-full
             latex-bin
             latexmk
@@ -94,62 +107,161 @@
           };
         };
 
-        documentNames = [
-          "document"
-          "exprog"
-          "memoire"
-          "presentation"
+        documentsConfig = [
+          {
+            name = "exercice-umons";
+            directory = "exercice-umons";
+            pandocArguments = [];
+          }
+          {
+            name = "exprog";
+            directory = "exprog";
+            pandocArguments = [];
+          }
+          {
+            name = "memoire-umons";
+            directory = "memoire-umons";
+            pandocArguments = [];
+          }
+          {
+            name = "presentation";
+            directory = "presentation";
+            pandocArguments = [
+              "--slide-level=2"
+              "--shift-heading-level=0"
+              "--to=beamer"
+            ];
+          }
         ];
 
-        documentTypes = inputs.nixpkgs.lib.genAttrs documentNames (
-          name:
-            pkgs.stdenvNoCC.mkDerivation {
-              name = "umons-" + name;
-
-              src = pkgs.lib.cleanSource ./.;
-
-              buildInputs = [
-                tex
-                pandoc
-                pkgs.gnumake
-              ];
-
-              buildPhase = ''
-                runHook preBuild
-
-                make -C template build-${name}
-
-                runHook postBuild
-              '';
-
-              installPhase = ''
-                runHook preInstall
-
-                mkdir -p $out
-                cp template/${name}.pdf $out/
-
-                runHook postInstall
-              '';
-            }
-        );
-
-        pandoc-exercice-umons = pkgs.writeShellApplication {
-          name = "pandoc-exercice-umons";
+        umons-pandoc-app = pkgs.writeShellApplication {
+          name = "umons-pandoc-app";
           text = ''
-            ${pkgs.pandoc}/bin/pandoc --from markdown --to latex -s --template=${pkgs.pandoc-template-umons}/templates/umons.latex -o pandoc-exercice-umons.pdf "$@"
+            ${pkgs.pandoc}/bin/pandoc \
+              --standalone \
+              --to=latex \
+              --template=${pkgs.pandoc-template-umons}/templates/umons.latex \
+              "$@"
           '';
           runtimeInputs = [tex];
         };
+
+        watch-umons-pandoc-app = pkgs.writeShellApplication {
+          name = "watch-umons-pandoc-app";
+          text = ''
+            export TEXINPUTS="${./.}//:"
+
+            echo "Now watching for changes and building it..."
+
+            while true; do \
+              ${umons-pandoc-app}/bin/umons-pandoc-app "$@"
+              ${pkgs.inotify-tools}/bin/inotifywait --exclude '\.pdf|\.git' -qre close_write .; \
+            done
+          '';
+          runtimeInputs = [tex];
+        };
+
+        documentTypes =
+          inputs.nixpkgs.lib.foldl
+          (carry: config:
+            carry
+            // {
+              "${config.name}" = pkgs.stdenvNoCC.mkDerivation {
+                name = "umons-${config.name}";
+
+                src = pkgs.lib.cleanSource ./.;
+
+                TEXINPUTS = "${./.}//:";
+
+                buildPhase = let
+                  pandocOptions = inputs.nixpkgs.lib.concatStrings (
+                    map
+                    (argument: "${argument} ")
+                    config.pandocArguments
+                  );
+                in ''
+                  runHook preBuild
+
+                  ${umons-pandoc-app}/bin/umons-pandoc-app \
+                    --from=markdown \
+                    --output=${config.name}.pdf \
+                    ${pandocOptions} \
+                    $src/template/src/${config.directory}/*.md
+
+                  runHook postBuild
+                '';
+
+                installPhase = ''
+                  runHook preInstall
+
+                  mkdir -p $out
+                  cp ${config.name}.pdf $out/
+
+                  runHook postInstall
+                '';
+              };
+            })
+          {}
+          documentsConfig;
+
+        mkApp = {
+          drv,
+          name ? drv.pname or drv.name,
+          exePath ? drv.passthru.exePath or "/bin/${name}",
+        }: {
+          type = "app";
+          program = "${drv}${exePath}";
+        };
+
+        watcherApps =
+          inputs.nixpkgs.lib.foldl
+          (carry: config:
+            carry
+            // {
+              "watch-${config.name}" = mkApp {
+                drv = pkgs.writeShellApplication {
+                  name = "watch-umons-pandoc-${config.name}-app";
+                  text = let
+                    pandocOptions = inputs.nixpkgs.lib.concatStrings (
+                      map
+                      (argument: "${argument} ")
+                      config.pandocArguments
+                    );
+                  in ''
+                    export TEXINPUTS="${./.}//:"
+
+                    echo "Now watching for changes and building it..."
+
+                    while true; do \
+                      ${umons-pandoc-app}/bin/umons-pandoc-app \
+                        ${pandocOptions} \
+                        "$@"
+                      ${pkgs.inotify-tools}/bin/inotifywait --exclude '\.pdf|\.git' -qre close_write .; \
+                    done
+                  '';
+                };
+              };
+            })
+          {}
+          documentsConfig;
       in {
         formatter = pkgs.alejandra;
 
-        # Nix shell / nix build
-        packages =
-          documentTypes
+        # nix run
+        apps =
+          watcherApps
           // {
-            default = pkgs.latex-umons;
-            pandoc-exercice-umons = pandoc-exercice-umons;
+            pandoc = mkApp { drv = umons-pandoc-app; };
+          }
+          // {
+            watch = mkApp {drv = watch-umons-pandoc-app;};
+          }
+          // {
+            pandoc-exercice-umons = mkApp { drv = throw "Please update your command, 'pandoc-exercice-umons' has been renamed into 'pandoc'."; };
           };
+
+        # Nix shell / nix build
+        packages = documentTypes;
 
         # Nix develop
         devShells.default = pkgs.mkShellNoCC {
