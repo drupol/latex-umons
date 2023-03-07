@@ -204,22 +204,14 @@
           {}
           documentsConfig;
 
-        mkApp = {
-          drv,
-          name ? drv.pname or drv.name,
-          exePath ? drv.passthru.exePath or "/bin/${name}",
-        }: {
-          type = "app";
-          program = "${drv}${exePath}";
-        };
-
         watcherApps =
           inputs.nixpkgs.lib.foldl
           (carry: config:
             carry
             // {
-              "watch-${config.name}" = mkApp {
-                drv = pkgs.writeShellApplication {
+              "watch-${config.name}" = {
+                type = "app";
+                program = pkgs.writeShellApplication {
                   name = "watch-umons-pandoc-${config.name}-app";
                   text = let
                     pandocOptions = inputs.nixpkgs.lib.concatStrings (
@@ -251,13 +243,13 @@
         apps =
           watcherApps
           // {
-            pandoc = mkApp { drv = umons-pandoc-app; };
+            pandoc = { type = "app";  program = umons-pandoc-app; };
           }
           // {
-            watch = mkApp {drv = watch-umons-pandoc-app;};
+            watch = { type = "app";  program = watch-umons-pandoc-app; };
           }
           // {
-            pandoc-exercice-umons = mkApp { drv = throw "Please update your command, 'pandoc-exercice-umons' has been renamed into 'pandoc'."; };
+            pandoc-exercice-umons = { type = "app"; program = throw "Please update your command, 'pandoc-exercice-umons' has been renamed into 'pandoc'."; };
           };
 
         # Nix shell / nix build
