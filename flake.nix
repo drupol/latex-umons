@@ -17,9 +17,11 @@
 
       flake = let
         overlay-latex-umons = nixpkgs: final: prev: {
-          latex-umons = prev.stdenvNoCC.mkDerivation {
+          latex-umons = prev.stdenvNoCC.mkDerivation (finalAttrs: {
             name = "latex-umons";
             pname = "latex-umons";
+            version = "1.0.0";
+
             src = inputs.nix-filter.lib.filter {
               root = ./.;
               exclude = [./template];
@@ -36,8 +38,11 @@
               runHook postInstall
             '';
 
-            tlType = "run";
-          };
+            passthru = {
+              pkgs = [finalAttrs.finalPackage];
+              tlType = "run";
+            };
+          });
           pandoc-template-umons = prev.stdenvNoCC.mkDerivation {
             name = "pandoc-template-umons";
             pname = "pandoc-template-umons";
