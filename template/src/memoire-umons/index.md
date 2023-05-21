@@ -6,34 +6,38 @@ title: Memoire title
 subtitle: Memoire subtitle
 directeur: Mr John Doe
 service: Service
+biblatex: true
+biblio-title: Bibliography title
+bibliography:
+- template/src/memoire-umons/ref.bib
 csquotes: true
 graphics: true
-reference-section-title: Bibliography title
-link-citations: true
-link-bibliography: true
-references:
-- type: article-journal
-  id: WatsonCrick1953
-  author:
-  - family: Watson
-    given: J. D.
-  - family: Crick
-    given: F. H. C.
-  issued:
-    date-parts:
-    - - 1953
-      - 4
-      - 25
-  title: 'Molecular structure of nucleic acids: a structure for
-    deoxyribose nucleic acid'
-  title-short: Molecular structure of nucleic acids
-  container-title: Nature
-  volume: 171
-  issue: 4356
-  page: 737-738
-  DOI: 10.1038/171737a0
-  URL: https://www.nature.com/articles/171737a0
-  language: en-GB
+# reference-section-title: Bibliography title
+# link-citations: true
+# link-bibliography: true
+# references:
+# - type: article-journal
+#   id: WatsonCrick1953
+#   author:
+#   - family: Watson
+#     given: J. D.
+#   - family: Crick
+#     given: F. H. C.
+#   issued:
+#     date-parts:
+#     - - 1953
+#       - 4
+#       - 25
+#   title: 'Molecular structure of nucleic acids: a structure for
+#     deoxyribose nucleic acid'
+#   title-short: Molecular structure of nucleic acids
+#   container-title: Nature
+#   volume: 171
+#   issue: 4356
+#   page: 737-738
+#   DOI: 10.1038/171737a0
+#   URL: https://www.nature.com/articles/171737a0
+#   language: en-GB
 ---
 
 \chapter{Chapter one}
@@ -42,7 +46,7 @@ references:
 
 ## Themes, fonts, etc.
 
-- I use default **pandoc** themes[@WatsonCrick1953].
+- I use default **pandoc** themes\footfullcite{einstein}.
 - This presentation is made with **Frankfurt** theme and **beaver** color theme.
 - I like **professionalfonts** font scheme.
 
@@ -316,5 +320,3 @@ List from the right column:
 
 - Let's go for it!
 - No way we go for it! -->
-
-\clearpage

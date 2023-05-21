@@ -188,6 +188,7 @@
                   runHook preBuild
 
                   ${umons-pandoc-app}/bin/umons-pandoc-app \
+                    --pdf-engine=latexmk \
                     --citeproc \
                     --from=markdown \
                     --output=${config.name}.pdf \
