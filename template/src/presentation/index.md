@@ -7,13 +7,17 @@ documentclass: beamer
 beamer: true
 theme: "UMONS"
 notes: false
+biblatex: true
+biblio-title: Bibliography title
+bibliography:
+- template/src/presentation/ref.bib
 ---
 
 # General information
 
 ## Themes, fonts, etc.
 
-- I use default **pandoc** themes.
+- I use default **pandoc** themes\footfullcite{einstein}.
 - This presentation is made with **Frankfurt** theme and **beaver** color theme.
 - I like **professionalfonts** font scheme.
 
