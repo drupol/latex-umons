@@ -3,10 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-filter.url = github:numtide/nix-filter;
+    nix-filter.url = "github:numtide/nix-filter";
   };
 
-  outputs = inputs @ {flake-parts, ...}:
+  outputs = inputs @ {self, flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = [
         "aarch64-linux"
@@ -92,7 +92,7 @@
           name = "pandoc";
           text = ''
             ${pkgs.pandoc}/bin/pandoc \
-              --data-dir=${pkgs.pandoc-template-umons}
+              --data-dir=${pkgs.pandoc-template-umons} \
               "$@"
           '';
           runtimeInputs = [tex];
@@ -188,6 +188,7 @@
                   runHook preBuild
 
                   ${umons-pandoc-app}/bin/umons-pandoc-app \
+                    --citeproc \
                     --from=markdown \
                     --output=${config.name}.pdf \
                     ${pandocOptions} \
