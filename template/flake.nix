@@ -79,7 +79,8 @@
         text = ''
           ${pkgs.pandoc}/bin/pandoc \
             --standalone \
-            --pdf-engine=lualatex \
+            --citeproc \
+            --pdf-engine=latexmk \
             --template=${pkgs.pandoc-template-umons}/templates/umons.latex \
             --from=markdown \
             --to=latex \
