@@ -130,8 +130,8 @@
 \providetranslation[to=english]{umons@team}{Team}
 \providetranslation[to=english]{umons@teams}{Teams}
 \providetranslation[to=english]{umons@mathematics}{Mathematics}
-\providetranslation[to=english]{Department of Mathematics}{%
-  Department of Mathematics}
+\providetranslation[to=english]{Departement of Mathematics}{%
+  Departement of Mathematics}
 \providetranslation[to=english]{Faculty of Sciences}{Faculty of Sciences}
 \providetranslation[to=english]{University of Mons}{University of Mons}
 \providetranslation[to=english]{Master's Thesis submitted by}{%
@@ -153,7 +153,7 @@
 \providetranslation[to=french]{umons@team}{Service}
 \providetranslation[to=french]{umons@teams}{Services}
 \providetranslation[to=french]{umons@mathematics}{sciences math\'ematiques}
-\providetranslation[to=french]{Department of Mathematics}{%
+\providetranslation[to=french]{departement of Mathematics}{%
   D\'epartement de Math\'ematique}
 \providetranslation[to=french]{Faculty of Sciences}{Facult\'e des Sciences}
 \providetranslation[to=french]{University of Mons}{Universit\'e de Mons}
@@ -177,7 +177,7 @@
 
 \AtBeginDocument{%
   \translatelet{\@discipline}{umons@mathematics}
-  \translatelet{\@department}{Department of Mathematics}
+  \translatelet{\@departement}{Department of}
   \translatelet{\memoire@faculte}{Faculty of Sciences}
   \translatelet{\memoire@universite}{University of Mons}
   \def\memoire@realise{%
@@ -214,9 +214,11 @@
 \newcommand{\services}[1]{%
   \def\umons@service{#1}%
   \translatelet{\@service@name}{umons@teams}}
+\newcommand{\departement}[1]{%
+  \def\umons@departement{#1}%
+  \translatelet{\@departement@name}{Department of}}
 
 \newcommand{\discipline}[1]{\def\@discipline{#1}}
-\newcommand{\departement}[1]{\def\@department{#1}}
 \def\@date{}
 
 \def\umons@logofac{UMONS_FS}
@@ -256,7 +258,7 @@
             \ifx \umons@logofac\empty \else
               \resizebox{!}{15mm}{\includegraphics{\umons@logofac}}\\[3pt]%
             \fi
-            \@department
+            \@departement@name\ \umons@departement
           \end{tabular}%
           %\fi
           \hfill
