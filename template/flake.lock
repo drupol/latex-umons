@@ -42,11 +42,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1692041194,
-        "narHash": "sha256-ZkcSNcSMI07SCH9RB864gxs94ddrivgnB0nQLYS/HyY=",
+        "lastModified": 1692071373,
+        "narHash": "sha256-Trlhf9Vg3dmjCq8uX3hEfEeRGXM/UdYkhq7fO54cCZo=",
         "owner": "drupol",
         "repo": "latex-umons",
-        "rev": "92911cafdf1746603562fe47c44e2c659f2ccadf",
+        "rev": "dd3631b658412eb3beeec6bf674b37bb0dbb7544",
         "type": "github"
       },
       "original": {
@@ -124,11 +124,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1691976506,
-        "narHash": "sha256-EqdSK1LBlzQ56oFRYVmk7xdWrqtqZJy9G1xy0cQekjw=",
+        "lastModified": 1692007866,
+        "narHash": "sha256-X8w0vPZjZxMm68VCwh/BHDoKRGp+BgzQ6w7Nkif6IVM=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "81b970640e56a5c07a336d2c05018b0c9bf57a51",
+        "rev": "de2b8ddf94d6cc6161b7659649594c79bd66c13b",
         "type": "github"
       },
       "original": {
