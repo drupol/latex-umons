@@ -176,7 +176,6 @@
 \providetranslation[to=french]{umons@Remark}{remarque}
 
 \AtBeginDocument{%
-  \translatelet{\@discipline}{umons@mathematics}
   \translatelet{\@departement}{Department of}
   \translatelet{\memoire@faculte}{Faculty of Sciences}
   \translatelet{\memoire@universite}{University of Mons}
@@ -217,8 +216,9 @@
 \newcommand{\departement}[1]{%
   \def\umons@departement{#1}%
   \translatelet{\@departement@name}{Department of}}
-
-\newcommand{\discipline}[1]{\def\@discipline{#1}}
+\newcommand{\discipline}[1]{
+  \def\@discipline{#1}
+}
 \def\@date{}
 
 \def\umons@logofac{UMONS_FS}
